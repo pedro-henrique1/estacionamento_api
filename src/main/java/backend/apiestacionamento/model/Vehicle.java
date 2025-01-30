@@ -11,6 +11,7 @@ import java.sql.Date;
 
 @Entity
 @Data
+@Table(name = "vehicle")
 @EntityListeners(AuditingEntityListener.class)
 public class Vehicle {
     @Id
@@ -41,8 +42,6 @@ public class Vehicle {
 
     @LastModifiedDate
     private Date updated_at;
-
-
 
 
 }
