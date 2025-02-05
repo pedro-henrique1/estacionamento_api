@@ -10,4 +10,5 @@ public class VehicleDto {
     private String Color;
     private String Plate;
     private String Type;
+    private Long establishment;
 }

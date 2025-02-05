@@ -14,4 +14,5 @@ public class AddresseDto {
     private String state;
     private String postal_code;
     private String country;
+    private Long establishmentId;
 }
