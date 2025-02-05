@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "vehicle_log")
 public class VehicleLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne

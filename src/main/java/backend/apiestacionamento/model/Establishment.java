@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -15,7 +15,7 @@ import java.sql.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class Establishment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -34,9 +34,9 @@ public class Establishment {
     private int vacancies_car;
 
     @CreatedDate
-    private Date created_at;
+    private LocalDateTime created_at;
 
     @LastModifiedDate
-    private Date updated_at;
+    private LocalDateTime updated_at;
 
 }
