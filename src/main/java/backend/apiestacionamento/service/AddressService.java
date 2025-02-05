@@ -17,7 +17,7 @@ public class AddressService {
     private final AddresseMappper addresseMappper;
 
 
-    public AddressService(AddressesRepository addressesRepository, AddresseMappper addresseMappper, EstablishmentMapper establishmentMapper1) {
+    public AddressService(AddressesRepository addressesRepository, AddresseMappper addresseMappper) {
         this.addressesRepository = addressesRepository;
         this.addresseMappper = addresseMappper;
     }
