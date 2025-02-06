@@ -2,7 +2,6 @@ package backend.apiestacionamento.dto;
 
 import lombok.Data;
 
-import java.sql.Date;
 
 @Data
 public class EstablishmentDto {
