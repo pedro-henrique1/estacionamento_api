@@ -1,22 +1,24 @@
 package backend.apiestacionamento.controller;
 
 
-import backend.apiestacionamento.dto.VehicleDto;
+import backend.apiestacionamento.dto.VehicleRecord;
 import backend.apiestacionamento.service.VehicleService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/vehicle")
 public class VehicleController {
 
     private final VehicleService vehicleService;
 
+    public VehicleController(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
+
 
     @PostMapping
-    public ResponseEntity<VehicleDto> post(@RequestBody VehicleDto vehicle) {
+    public ResponseEntity<VehicleRecord> post(@RequestBody VehicleRecord vehicle) {
         ;
         return ResponseEntity.ok(vehicleService.saveVehicle(vehicle).getBody());
     }
@@ -27,17 +29,17 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(vehicleService.findVehicleById(id));
     }
 
     @PutMapping
-    public ResponseEntity<?> put(@RequestBody VehicleDto vehicle) {
+    public ResponseEntity<?> put(@RequestBody VehicleRecord vehicle) {
         return ResponseEntity.ok(vehicleService.updateVehicle(vehicle));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         return ResponseEntity.ok(vehicleService.deleteVehicle(id));
     }
 }

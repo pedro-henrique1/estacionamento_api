@@ -1,7 +1,7 @@
 package backend.apiestacionamento.controller;
 
 
-import backend.apiestacionamento.dto.EstablishmentDto;
+import backend.apiestacionamento.dto.EstablishmentRecord;
 import backend.apiestacionamento.service.EstablishmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class EstablishmentController {
     }
 
     @PostMapping
-    public ResponseEntity<EstablishmentDto> CreateEstablishment(@RequestBody EstablishmentDto establishment) {
+    public ResponseEntity<EstablishmentRecord> CreateEstablishment(@RequestBody EstablishmentRecord establishment) {
         return ResponseEntity.ok(establishmentService.creatEstablishment(establishment));
     }
 
@@ -27,18 +27,17 @@ public class EstablishmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEstablishmentById(@PathVariable Long id) {
+    public ResponseEntity<?> getEstablishmentById(@PathVariable Integer id) {
         return ResponseEntity.ok(establishmentService.getEstablishmentById(id));
     }
 
     @PatchMapping
-    public ResponseEntity<?> updateEstablishment(@RequestBody EstablishmentDto establishment) {
-        establishmentService.updateEstablishment(establishment);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<EstablishmentRecord> updateEstablishment(@RequestBody EstablishmentRecord establishment) {
+        return ResponseEntity.ok(establishmentService.updateEstablishment(establishment));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEstablishment(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEstablishment(@PathVariable Integer id) {
         establishmentService.deleteEstablishmentById(id);
         return ResponseEntity.ok().build();
     }
