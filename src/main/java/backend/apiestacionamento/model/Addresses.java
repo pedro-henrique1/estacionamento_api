@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Addresses {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private int number;
@@ -43,10 +43,12 @@ public class Addresses {
     private String country;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @OneToOne
     @JoinColumn(name = "establishment_id", referencedColumnName = "id", nullable = false)
