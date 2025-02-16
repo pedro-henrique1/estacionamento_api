@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class Establishment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -44,11 +44,67 @@ public class Establishment {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getVacancies_motorcycles() {
+        return vacancies_motorcycles;
+    }
+
+    public void setVacancies_motorcycles(int vacancies_motorcycles) {
+        this.vacancies_motorcycles = vacancies_motorcycles;
+    }
+
+    public int getVacancies_car() {
+        return vacancies_car;
+    }
+
+    public void setVacancies_car(int vacancies_car) {
+        this.vacancies_car = vacancies_car;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

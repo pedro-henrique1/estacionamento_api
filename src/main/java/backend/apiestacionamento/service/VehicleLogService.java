@@ -26,14 +26,16 @@ public class VehicleLogService {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public ResponseEntity<?> exitTime(VehicleLogRecord vehicleLog) {
-        VehicleLog vehicleLog1 = vehicleLogRepository.findById(vehicleLog.id()).orElseThrow(() -> new RuntimeException("vehicle not found"));
-        if (vehicleLog.entryTime().isBefore(vehicleLog1.getEntryTime())) {
+    public ResponseEntity<?> exitTime(VehicleLogRecord vehicleLog, Long id) {
+        VehicleLog existingVehicleLog = vehicleLogRepository.findById(id).orElseThrow(() -> new RuntimeException("vehicle not found"));
+
+        if (vehicleLog.exitTime().isBefore(existingVehicleLog.getEntryTime())) {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
-        vehicleLog1.setExitTime(vehicleLog.exitTime());
-        vehicleLogRepository.save(vehicleLog1);
-        return ResponseEntity.status(HttpStatus.OK).build();
+
+        existingVehicleLog.setExitTime(vehicleLog.exitTime());
+        vehicleLogRepository.save(existingVehicleLog);
+        return ResponseEntity.ok(vehicleLogMapper.vehicleToDto(existingVehicleLog));
     }
 
 

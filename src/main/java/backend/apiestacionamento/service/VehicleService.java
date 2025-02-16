@@ -6,6 +6,7 @@ import backend.apiestacionamento.dto.mapper.VehicleMapper;
 import backend.apiestacionamento.model.Vehicle;
 import backend.apiestacionamento.repository.VehicleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class VehicleService {
 
     public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {
@@ -25,6 +27,7 @@ public class VehicleService {
 
 
     public ResponseEntity<VehicleRecord> saveVehicle(VehicleRecord vehicle) {
+        System.out.println(vehicle);
         if (vehicle != null) {
             Vehicle vehicleResponse = vehicleRepository.save(vehicleMapper.ToEntityVehicle(vehicle));
             return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicleResponse));
@@ -41,7 +44,7 @@ public class VehicleService {
 
     }
 
-    public ResponseEntity<VehicleRecord> deleteVehicle(Integer id) {
+    public ResponseEntity<VehicleRecord> deleteVehicle(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("vehicle not found"));
         vehicleRepository.delete(vehicle);
         return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicle));
@@ -52,7 +55,7 @@ public class VehicleService {
         return ResponseEntity.ok(vehicles.stream().map(vehicleMapper::vehicleToDto).collect(Collectors.toList()));
     }
 
-    public ResponseEntity<VehicleRecord> findVehicleById(Integer id) {
+    public ResponseEntity<VehicleRecord> findVehicleById(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("vehicle not found"));
         return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicle));
     }

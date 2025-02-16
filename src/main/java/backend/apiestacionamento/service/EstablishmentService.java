@@ -37,14 +37,14 @@ public class EstablishmentService {
         return establishments.stream().map(establishmentMapper::establishmentToDTO).collect(Collectors.toList());
     }
 
-    public EstablishmentRecord getEstablishmentById(Integer id) {
+    public EstablishmentRecord getEstablishmentById(Long id) {
         Establishment establishment = establishmentRepository.findById(id).orElseThrow(() -> new RuntimeException("establishment not found"));
         return establishmentMapper.establishmentToDTO(establishment);
     }
 
 
     public EstablishmentRecord updateEstablishment(EstablishmentRecord establishmentRecord) {
-        Establishment establishment1 = establishmentRepository.findById(Math.toIntExact(establishmentRecord.id())).orElseThrow(() -> new RuntimeException("establishment not found"));
+        Establishment establishment1 = establishmentRepository.findById(establishmentRecord.id()).orElseThrow(() -> new RuntimeException("establishment not found"));
         establishmentMapper.updateEstablishment(establishmentRecord, establishment1);
         establishmentRepository.save(establishment1);
         return establishmentMapper.establishmentToDTO(establishment1);
@@ -55,7 +55,7 @@ public class EstablishmentService {
 //        establishment.setVacancies_car(establishment.getVacancies_car());
     }
 
-    public void deleteEstablishmentById(Integer id) {
+    public void deleteEstablishmentById(Long id) {
         establishmentRepository.deleteById(id);
     }
 }

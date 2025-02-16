@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class VehicleLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "establishment_id", referencedColumnName = "id", nullable = false)
@@ -33,6 +33,30 @@ public class VehicleLog {
 
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Establishment getEstablishment() {
+        return establishment;
+    }
+
+    public void setEstablishment(Establishment establishment) {
+        this.establishment = establishment;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
 
     public LocalDateTime getEntryTime() {
         return entryTime;
