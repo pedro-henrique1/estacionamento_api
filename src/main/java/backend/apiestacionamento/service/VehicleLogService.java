@@ -1,7 +1,7 @@
 package backend.apiestacionamento.service;
 
 
-import backend.apiestacionamento.dto.VehicleLogDto;
+import backend.apiestacionamento.dto.VehicleLogRecord;
 import backend.apiestacionamento.dto.mapper.VehicleLogMapper;
 import backend.apiestacionamento.model.VehicleLog;
 import backend.apiestacionamento.repository.VehicleLogRepository;
@@ -21,17 +21,18 @@ public class VehicleLogService {
         this.vehicleLogMapper = vehicleLogMapper;
     }
 
-    public ResponseEntity<?> save(VehicleLogDto vehicleLog) {
+    public ResponseEntity<?> save(VehicleLogRecord vehicleLog) {
         vehicleLogRepository.save(vehicleLogMapper.ToEntityVehicleLog(vehicleLog));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    public ResponseEntity<?> exitTime(VehicleLogDto vehicleLog) {
-        VehicleLog vehicleLog1 = vehicleLogRepository.findById(vehicleLog.getId()).orElseThrow(() -> new RuntimeException("vehicle not found"));
-        if (vehicleLog1.getId() == null || vehicleLog.getExit_time().isAfter(vehicleLog1.getEntry_time())) {
+    public ResponseEntity<?> exitTime(VehicleLogRecord vehicleLog) {
+        VehicleLog vehicleLog1 = vehicleLogRepository.findById(vehicleLog.id()).orElseThrow(() -> new RuntimeException("vehicle not found"));
+        if (vehicleLog.entryTime().isBefore(vehicleLog1.getEntryTime())) {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
-        vehicleLog1.setExit_time(vehicleLog.getExit_time());
+        vehicleLog1.setExitTime(vehicleLog.exitTime());
+        vehicleLogRepository.save(vehicleLog1);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
