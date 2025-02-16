@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 public record VehicleRecord(
-        Integer id,
+        Long id,
         String mark,
         String model,
         String color,

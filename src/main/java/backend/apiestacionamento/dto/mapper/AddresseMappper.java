@@ -10,20 +10,23 @@ import org.mapstruct.*;
 public interface AddresseMappper {
 
 
-//    @Mapping(source = "establishment", target = "establishment.id") // Transforma o objeto em ID
+    @Mapping(source = "establishment", target = "establishment") // Transforma o objeto em ID
 //    @Mapping(source = "createdAt", target = "created_at")
 //    @Mapping(source = "updatedAt", target = "updated_at")
     AddresseRecord AddressesToDto(Addresses addresse);
 
-//    @Mapping(source = "establishment.id", target = "establishment", qualifiedByName = "mapEstablishment")
+    @Mapping(source = "establishment", target = "establishment")
 //    @Mapping(source = "created_at", target = "createdAt")
 //    @Mapping(source = "updated_at", target = "updatedAt")
     Addresses ToEntityAddresses(AddresseRecord addresses);
 
     void updateAddressesFromDto(AddresseRecord dto, @MappingTarget Addresses entity);
 
-    @Named("mapEstablishment")
-    default Establishment mapEstablishment(Integer id) {
+    default Long map(Establishment establishment) {
+        return establishment != null ? establishment.getId() : null;
+    }
+
+    default Establishment map(Long id) {
         if (id == null) {
             return null;
         }
