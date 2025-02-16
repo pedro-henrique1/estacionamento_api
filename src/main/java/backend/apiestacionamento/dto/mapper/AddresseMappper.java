@@ -11,9 +11,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
+
+@Mapper(componentModel = SPRING)
 public interface AddresseMappper {
-    AddresseMappper INSTANCE = Mappers.getMapper(AddresseMappper.class);
 
     @Mapping(source = "establishment.id", target = "establishmentId")
     AddresseDto AddressesToDto(Addresses addresse);
