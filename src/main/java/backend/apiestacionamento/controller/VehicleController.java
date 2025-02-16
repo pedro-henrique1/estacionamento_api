@@ -3,17 +3,17 @@ package backend.apiestacionamento.controller;
 
 import backend.apiestacionamento.dto.VehicleDto;
 import backend.apiestacionamento.service.VehicleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/vehicle")
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/vehicle")
 public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    public VehicleController(VehicleService vehicleService) {
-        this.vehicleService = vehicleService;
-    }
 
     @PostMapping
     public ResponseEntity<?> post(@RequestBody VehicleDto vehicle) {
@@ -27,7 +27,7 @@ public class VehicleController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("${id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         vehicleService.findVehicleById(id);
         return ResponseEntity.ok().build();
@@ -39,7 +39,7 @@ public class VehicleController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("${id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
         return ResponseEntity.ok().build();

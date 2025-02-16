@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/address")
+@RestController
+@RequestMapping("/address")
 public class AddressController {
     private final AddressService addressService;
 
@@ -36,7 +37,7 @@ public class AddressController {
         return ResponseEntity.ok(addressService.getAddressById(id));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         addressService.deleteAddressById(id);
         return ResponseEntity.noContent().build();
