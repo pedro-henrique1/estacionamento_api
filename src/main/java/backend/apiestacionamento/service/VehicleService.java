@@ -5,6 +5,7 @@ import backend.apiestacionamento.dto.VehicleDto;
 import backend.apiestacionamento.dto.mapper.VehicleMapper;
 import backend.apiestacionamento.model.Vehicle;
 import backend.apiestacionamento.repository.VehicleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +13,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final VehicleMapper vehicleMapper;
 
-    public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {
-        this.vehicleRepository = vehicleRepository;
-        this.vehicleMapper = vehicleMapper;
-    }
 
     public ResponseEntity<VehicleDto> saveVehicle(VehicleDto vehicle) {
-        if (vehicle != null) {
-            vehicleRepository.save(vehicleMapper.ToEntityVehicle(vehicle));
-            return ResponseEntity.ok(vehicle);
+        if (vehicle != null ) {
+            Vehicle vehicleResponse = vehicleRepository.save(vehicleMapper.ToEntityVehicle(vehicle));
+            return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicleResponse));
         }
         return ResponseEntity.badRequest().build();
     }

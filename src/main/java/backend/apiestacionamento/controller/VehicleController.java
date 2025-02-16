@@ -16,32 +16,28 @@ public class VehicleController {
 
 
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody VehicleDto vehicle) {
-        vehicleService.saveVehicle(vehicle);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<VehicleDto> post(@RequestBody VehicleDto vehicle) {
+        ;
+        return ResponseEntity.ok(vehicleService.saveVehicle(vehicle).getBody());
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        vehicleService.findAllVehicles();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(vehicleService.findAllVehicles());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        vehicleService.findVehicleById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(vehicleService.findVehicleById(id));
     }
 
     @PutMapping
     public ResponseEntity<?> put(@RequestBody VehicleDto vehicle) {
-        vehicleService.updateVehicle(vehicle);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(vehicleService.updateVehicle(vehicle));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        vehicleService.deleteVehicle(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(vehicleService.deleteVehicle(id));
     }
 }

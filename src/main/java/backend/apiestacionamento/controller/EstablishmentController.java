@@ -17,9 +17,8 @@ public class EstablishmentController {
     }
 
     @PostMapping
-    public ResponseEntity<?> CreateEstablishment(@RequestBody EstablishmentDto establishment) {
-        establishmentService.creatEstablishment(establishment);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<EstablishmentDto> CreateEstablishment(@RequestBody EstablishmentDto establishment) {
+        return ResponseEntity.ok(establishmentService.creatEstablishment(establishment));
     }
 
     @GetMapping

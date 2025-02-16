@@ -23,13 +23,14 @@ public class EstablishmentService {
         this.establishmentMapper = establishmentMapper;
     }
 
-    public void creatEstablishment(EstablishmentDto establishment) {
+    public EstablishmentDto creatEstablishment(EstablishmentDto establishment) {
         if (establishment != null) {
 
-            establishmentRepository.save(establishmentMapper.ToEntityEstablishment(establishment));
-            ResponseEntity.ok().build();
+            Establishment establishmentDto = establishmentRepository.save(establishmentMapper.ToEntityEstablishment(establishment));
+            return establishmentMapper.establishmentToDTO(establishmentDto);
         }
         ResponseEntity.badRequest().build();
+        return null;
     }
 
     public List<EstablishmentDto> getAllEstablishments() {
