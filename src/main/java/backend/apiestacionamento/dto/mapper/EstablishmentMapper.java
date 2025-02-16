@@ -1,23 +1,21 @@
 package backend.apiestacionamento.dto.mapper;
 
 
-import backend.apiestacionamento.dto.EstablishmentDto;
+import backend.apiestacionamento.dto.EstablishmentRecord;
 import backend.apiestacionamento.model.Establishment;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface EstablishmentMapper {
 
-    @Mapping(source = "created_at", target = "created_at")
-    @Mapping(source = "updated_at", target = "updated_at")
-    EstablishmentDto establishmentToDTO(Establishment establishment);
+    EstablishmentRecord establishmentToDTO(Establishment establishment);
 
-    @Mapping(source = "created_at", target = "created_at")
-    @Mapping(source = "updated_at", target = "updated_at")
-    Establishment ToEntityEstablishment(EstablishmentDto establishmentDto);
+    Establishment ToEntityEstablishment(EstablishmentRecord establishmentRecord);
+
+    void updateEstablishment(EstablishmentRecord dto, @MappingTarget Establishment establishment);
 
 }
