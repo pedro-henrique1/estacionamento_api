@@ -3,6 +3,8 @@ package backend.apiestacionamento.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class AddresseDto {
     private Long id;
@@ -15,4 +17,6 @@ public class AddresseDto {
     private String postal_code;
     private String country;
     private Long establishmentId;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 }
