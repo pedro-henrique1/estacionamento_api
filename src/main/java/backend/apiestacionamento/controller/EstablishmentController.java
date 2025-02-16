@@ -27,7 +27,7 @@ public class EstablishmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEstablishmentById(@PathVariable Integer id) {
+    public ResponseEntity<?> getEstablishmentById(@PathVariable Long id) {
         return ResponseEntity.ok(establishmentService.getEstablishmentById(id));
     }
 
@@ -37,7 +37,7 @@ public class EstablishmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEstablishment(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteEstablishment(@PathVariable Long id) {
         establishmentService.deleteEstablishmentById(id);
         return ResponseEntity.ok().build();
     }

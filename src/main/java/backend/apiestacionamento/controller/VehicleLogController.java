@@ -24,9 +24,9 @@ public class VehicleLogController {
 
     }
 
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody VehicleLogRecord vehicleLog) {
-        return vehicleLogService.exitTime(vehicleLog);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody VehicleLogRecord vehicleLog, @PathVariable Long id) {
+        return vehicleLogService.exitTime(vehicleLog, id);
     }
 
 }

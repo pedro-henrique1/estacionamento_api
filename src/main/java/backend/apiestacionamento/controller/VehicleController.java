@@ -29,7 +29,7 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Integer id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         return ResponseEntity.ok(vehicleService.findVehicleById(id));
     }
 
@@ -39,7 +39,7 @@ public class VehicleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         return ResponseEntity.ok(vehicleService.deleteVehicle(id));
     }
 }
