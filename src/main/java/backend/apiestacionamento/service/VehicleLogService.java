@@ -3,6 +3,7 @@ package backend.apiestacionamento.service;
 
 import backend.apiestacionamento.dto.VehicleLogRecord;
 import backend.apiestacionamento.dto.mapper.VehicleLogMapper;
+import backend.apiestacionamento.exception.ParkingFullException;
 import backend.apiestacionamento.model.VehicleLog;
 import backend.apiestacionamento.repository.VehicleLogRepository;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,19 @@ public class VehicleLogService {
 
     private final VehicleLogRepository vehicleLogRepository;
     private final VehicleLogMapper vehicleLogMapper;
+    private final EstablishmentService establishmentService;
 
-    public VehicleLogService(VehicleLogRepository vehicleLogRepository, VehicleLogMapper vehicleLogMapper) {
+    public VehicleLogService(VehicleLogRepository vehicleLogRepository, VehicleLogMapper vehicleLogMapper, EstablishmentService establishmentService) {
         this.vehicleLogRepository = vehicleLogRepository;
         this.vehicleLogMapper = vehicleLogMapper;
+        this.establishmentService = establishmentService;
     }
 
     public ResponseEntity<?> save(VehicleLogRecord vehicleLog) {
+        if (establishmentService.isCarParkingFull(vehicleLog.establishment()) ||
+                establishmentService.isMotorcycleParkingFull(vehicleLog.establishment())) {
+            throw new ParkingFullException("Parking Full");
+        }
         vehicleLogRepository.save(vehicleLogMapper.ToEntityVehicleLog(vehicleLog));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
