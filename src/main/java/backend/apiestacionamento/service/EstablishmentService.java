@@ -46,11 +46,11 @@ public class EstablishmentService {
     }
 
 
-    public EstablishmentRecord updateEstablishment(EstablishmentRecord establishmentRecord) {
+    public void updateEstablishment(EstablishmentRecord establishmentRecord) {
         Establishment establishment1 = establishmentRepository.findById(establishmentRecord.id()).orElseThrow(() -> new RuntimeException("establishment not found"));
         establishmentMapper.updateEstablishment(establishmentRecord, establishment1);
         establishmentRepository.save(establishment1);
-        return establishmentMapper.establishmentToDTO(establishment1);
+        establishmentMapper.establishmentToDTO(establishment1);
 
     }
 

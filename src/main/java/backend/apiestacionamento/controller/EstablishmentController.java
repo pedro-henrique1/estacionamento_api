@@ -3,8 +3,11 @@ package backend.apiestacionamento.controller;
 
 import backend.apiestacionamento.dto.EstablishmentRecord;
 import backend.apiestacionamento.service.EstablishmentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/establishments")
@@ -32,14 +35,15 @@ public class EstablishmentController {
     }
 
     @PatchMapping
-    public ResponseEntity<EstablishmentRecord> updateEstablishment(@RequestBody EstablishmentRecord establishment) {
-        return ResponseEntity.ok(establishmentService.updateEstablishment(establishment));
+    public ResponseEntity<Map<String, String>> updateEstablishment(@RequestBody EstablishmentRecord establishment) {
+        establishmentService.updateEstablishment(establishment);
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Estabelecimento atualizado com sucesso"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEstablishment(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteEstablishment(@PathVariable Long id) {
         establishmentService.deleteEstablishmentById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Estabelecimento deletado com successo"));
     }
 
 }

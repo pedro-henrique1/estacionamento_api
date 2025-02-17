@@ -3,10 +3,12 @@ package backend.apiestacionamento.controller;
 
 import backend.apiestacionamento.dto.AddresseRecord;
 import backend.apiestacionamento.service.AddressService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/address")
@@ -23,8 +25,10 @@ public class AddressController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateAddress(@RequestBody AddresseRecord addressDto) {
-        return ResponseEntity.ok(addressService.updateAddress(addressDto));
+    public ResponseEntity<Map<String, String>> updateAddress(@RequestBody AddresseRecord addressDto) {
+        addressService.updateAddress(addressDto);
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Endereço atualizado com successo"));
+
     }
 
     @GetMapping
@@ -38,9 +42,9 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
+    public ResponseEntity<Map<String, String>> deleteAddress(@PathVariable Integer id) {
         addressService.deleteAddressById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Endereço deletado com sucesso"));
     }
 
 }
