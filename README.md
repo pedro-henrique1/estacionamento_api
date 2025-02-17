@@ -4,6 +4,7 @@
 [Docker]:https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white
 [sql]:https://img.shields.io/badge/Postgresql-%234169E1?style=for-the-badge&logo=postgresql&logoColor=white&color=%234169E1
 [postman]:https://img.shields.io/badge/postman-%23FF6C37?style=for-the-badge&logo=postman&logoColor=white
+[license]:https://img.shields.io/github/license/pedro-henrique1/estacionamento_api?style=for-the-badge
 
 
 
@@ -14,6 +15,7 @@
 ![][Docker]
 ![][sql]
 ![][postman]
+![][license]
 
 A API de Gerenciamento de Estacionamento é uma solução desenvolvida para facilitar o controle de estabelecimentos de
 estacionamento de carros e motos. A API permite o cadastro de empresas e veículos, além de gerenciar a entrada e saída
