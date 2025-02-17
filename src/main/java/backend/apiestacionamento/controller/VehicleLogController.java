@@ -2,7 +2,9 @@ package backend.apiestacionamento.controller;
 
 
 import backend.apiestacionamento.dto.VehicleLogRecord;
+import backend.apiestacionamento.exception.ParkingFullException;
 import backend.apiestacionamento.service.VehicleLogService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,12 @@ public class VehicleLogController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody VehicleLogRecord vehicleLog) {
-        return vehicleLogService.save(vehicleLog);
+        try {
+            return vehicleLogService.save(vehicleLog);
+
+        } catch (ParkingFullException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
 
     }
 

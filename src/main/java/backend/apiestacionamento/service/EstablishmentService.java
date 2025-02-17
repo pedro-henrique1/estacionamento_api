@@ -5,6 +5,7 @@ import backend.apiestacionamento.dto.EstablishmentRecord;
 import backend.apiestacionamento.dto.mapper.EstablishmentMapper;
 import backend.apiestacionamento.model.Establishment;
 import backend.apiestacionamento.repository.EstablishmentRepository;
+import backend.apiestacionamento.repository.VehicleLogRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,13 @@ import java.util.stream.Collectors;
 public class EstablishmentService {
     private final EstablishmentRepository establishmentRepository;
     private final EstablishmentMapper establishmentMapper;
+    private final VehicleLogRepository vehicleLogRepository;
 
 
-    public EstablishmentService(EstablishmentRepository establishmentRepository, EstablishmentMapper establishmentMapper) {
+    public EstablishmentService(EstablishmentRepository establishmentRepository, EstablishmentMapper establishmentMapper, VehicleLogRepository vehicleLogRepository) {
         this.establishmentRepository = establishmentRepository;
         this.establishmentMapper = establishmentMapper;
+        this.vehicleLogRepository = vehicleLogRepository;
     }
 
     public EstablishmentRecord creatEstablishment(EstablishmentRecord establishment) {
@@ -48,14 +51,25 @@ public class EstablishmentService {
         establishmentMapper.updateEstablishment(establishmentRecord, establishment1);
         establishmentRepository.save(establishment1);
         return establishmentMapper.establishmentToDTO(establishment1);
-//        establishment.setName(establishment.getName());
-//        establishment.setCnpj(establishment.getCnpj());
-//        establishment.setPhone(establishment.getPhone());
-//        establishment.setVacancies_motorcycles(establishment.getVacancies_motorcycles());
-//        establishment.setVacancies_car(establishment.getVacancies_car());
+
     }
 
     public void deleteEstablishmentById(Long id) {
         establishmentRepository.deleteById(id);
     }
+
+    public boolean isCarParkingFull(Long establishmentId) {
+        Establishment establishment = establishmentRepository.findById(establishmentId).orElse(null);
+        int activeCars = vehicleLogRepository.countActiveVehiclesByType(establishmentId, "Carro");
+        assert establishment != null;
+        return activeCars >= establishment.getVacancies_car();
+    }
+
+    public boolean isMotorcycleParkingFull(Long establishmentId) {
+        Establishment establishment = establishmentRepository.findById(establishmentId)
+                .orElseThrow(() -> new RuntimeException("Establishment not found"));
+        int activeMotorcycles = vehicleLogRepository.countActiveVehiclesByType(establishmentId, "Moto");
+        return activeMotorcycles >= establishment.getVacancies_motorcycles();
+    }
 }
+
