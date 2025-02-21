@@ -27,22 +27,11 @@ public class AddressService {
         return addresseMappper.AddressesToDto(address);
     }
 
-    public AddresseRecord updateAddress(AddresseRecord addresseRecord) {
+    public void updateAddress(AddresseRecord addresseRecord) {
         Addresses address = addressesRepository.findById(addresseRecord.id()).orElseThrow(() -> new RuntimeException("error"));
         addresseMappper.updateAddressesFromDto(addresseRecord, address);
         addressesRepository.save(address);
-        return addresseMappper.AddressesToDto(address);
-//        Addresses address = addressesRepository.findById(addresseRecord.id()).orElseThrow(() -> new RuntimeException("address not found"));
-//        address.setNumber(addresseRecord.number());
-//        address.setComplement(addresseRecord.complement());
-//        address.setStreet(addresseRecord.street());
-//        address.setNeighborhood(addresseRecord.neighborhood());
-//        address.setCity(addresseRecord.city());
-//        address.setState(addresseRecord.state());
-//        address.setPostal_code(addresseRecord.postal_code());
-//        address.setCountry(addresseRecord.country());
-//        addressesRepository.save(address);
-//        return addresseMappper.AddressesToDto(address);
+        addresseMappper.AddressesToDto(address);
     }
 
     public AddresseRecord getAddressById(Integer id) {

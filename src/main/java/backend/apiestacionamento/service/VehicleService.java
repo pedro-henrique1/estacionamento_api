@@ -5,7 +5,6 @@ import backend.apiestacionamento.dto.VehicleRecord;
 import backend.apiestacionamento.dto.mapper.VehicleMapper;
 import backend.apiestacionamento.model.Vehicle;
 import backend.apiestacionamento.repository.VehicleRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,18 +35,18 @@ public class VehicleService {
     }
 
 
-    public ResponseEntity<VehicleRecord> updateVehicle(VehicleRecord vehicle) {
+    public void updateVehicle(VehicleRecord vehicle) {
         Vehicle vehicleDto = vehicleRepository.findById(vehicle.id()).orElseThrow(() -> new RuntimeException("vehicle not found"));
         vehicleMapper.updateVehicle(vehicle, vehicleDto);
         vehicleRepository.save(vehicleDto);
-        return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicleDto));
+        ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicleDto));
 
     }
 
-    public ResponseEntity<VehicleRecord> deleteVehicle(Long id) {
+    public void deleteVehicle(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(() -> new RuntimeException("vehicle not found"));
         vehicleRepository.delete(vehicle);
-        return ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicle));
+        ResponseEntity.ok(vehicleMapper.vehicleToDto(vehicle));
     }
 
     public ResponseEntity<List<VehicleRecord>> findAllVehicles() {
