@@ -1,8 +1,9 @@
 package backend.apiestacionamento.service;
 
-
 import backend.apiestacionamento.dto.EstablishmentRecord;
 import backend.apiestacionamento.dto.mapper.EstablishmentMapper;
+import backend.apiestacionamento.exception.EstablishmentCreationException;
+import backend.apiestacionamento.exception.EstablishmentNotFoundException;
 import backend.apiestacionamento.model.Establishment;
 import backend.apiestacionamento.repository.EstablishmentRepository;
 import backend.apiestacionamento.repository.VehicleLogRepository;
@@ -18,21 +19,21 @@ public class EstablishmentService {
     private final EstablishmentMapper establishmentMapper;
     private final VehicleLogRepository vehicleLogRepository;
 
-
-    public EstablishmentService(EstablishmentRepository establishmentRepository, EstablishmentMapper establishmentMapper, VehicleLogRepository vehicleLogRepository) {
+    public EstablishmentService(EstablishmentRepository establishmentRepository,
+            EstablishmentMapper establishmentMapper, VehicleLogRepository vehicleLogRepository) {
         this.establishmentRepository = establishmentRepository;
         this.establishmentMapper = establishmentMapper;
         this.vehicleLogRepository = vehicleLogRepository;
     }
 
     public EstablishmentRecord creatEstablishment(EstablishmentRecord establishment) {
-        if (establishment != null) {
-
-            Establishment establishmentDto = establishmentRepository.save(establishmentMapper.ToEntityEstablishment(establishment));
-            return establishmentMapper.establishmentToDTO(establishmentDto);
+        if (establishment == null && !establishmentRepository.existsByCnpj(establishment.cnpj())) {
+            throw new EstablishmentCreationException();
         }
-        ResponseEntity.badRequest().build();
-        return null;
+
+        Establishment saveEstablishment = establishmentRepository
+                .save(establishmentMapper.ToEntityEstablishment(establishment));
+        return establishmentMapper.establishmentToDTO(saveEstablishment);
     }
 
     public List<EstablishmentRecord> getAllEstablishments() {
@@ -41,21 +42,21 @@ public class EstablishmentService {
     }
 
     public EstablishmentRecord getEstablishmentById(Long id) {
-        Establishment establishment = establishmentRepository.findById(id).orElseThrow(() -> new RuntimeException("establishment not found"));
+        Establishment establishment = establishmentRepository.findById(id)
+                .orElseThrow(() -> new EstablishmentNotFoundException(id));
         return establishmentMapper.establishmentToDTO(establishment);
     }
 
-
     public void updateEstablishment(EstablishmentRecord establishmentRecord) {
-        Establishment establishment1 = establishmentRepository.findById(establishmentRecord.id()).orElseThrow(() -> new RuntimeException("establishment not found"));
+        Establishment establishment1 = establishmentRepository.findById(establishmentRecord.id())
+                .orElseThrow(() -> new EstablishmentNotFoundException(establishmentRecord.id()));
         establishmentMapper.updateEstablishment(establishmentRecord, establishment1);
         establishmentRepository.save(establishment1);
-        establishmentMapper.establishmentToDTO(establishment1);
-
     }
 
-    public void deleteEstablishmentById(Long id) {
+    public ResponseEntity<Void> deleteEstablishmentById(Long id) {
         establishmentRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     public boolean isCarParkingFull(Long establishmentId) {
@@ -72,4 +73,3 @@ public class EstablishmentService {
         return activeMotorcycles >= establishment.getVacancies_motorcycles();
     }
 }
-

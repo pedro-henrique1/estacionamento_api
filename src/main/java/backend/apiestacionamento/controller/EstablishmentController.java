@@ -37,13 +37,13 @@ public class EstablishmentController {
     @PatchMapping
     public ResponseEntity<Map<String, String>> updateEstablishment(@RequestBody EstablishmentRecord establishment) {
         establishmentService.updateEstablishment(establishment);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Estabelecimento atualizado com sucesso"));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Estabelecimento atualizado com sucesso"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteEstablishment(@PathVariable Long id) {
         establishmentService.deleteEstablishmentById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Estabelecimento deletado com successo"));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(Map.of("message", "Estabelecimento deletado com sucesso"));
     }
 
 }
