@@ -15,6 +15,7 @@ public interface VehicleMapper {
     VehicleRecord vehicleToDto(Vehicle vehicle);
 
     //    @Mapping(source = "establishment.id", target = "establishment")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "establishment", source = "establishment")
     Vehicle ToEntityVehicle(VehicleRecord vehicleRecord);
 

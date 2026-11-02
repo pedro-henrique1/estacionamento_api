@@ -200,7 +200,7 @@ dos veículos de forma organizada.
         </td>
       </tr>
       <tr>
-        <td><kbd>PUT /vehicle/{id}</kbd></td>
+        <td><kbd>PUT/PATCH /vehicle</kbd></td>
         <td>Atualiza os dados de um veículo.</td>
         <td>
           <pre><code class="json">
@@ -371,6 +371,5 @@ Primeiro, clone o repositório para a sua máquina local:
 [📝 Como criar um Pedido de Puxar](https://www.atlassian.com/br/git/tutorials/making-a-pull-request)
 
 [💾 Commit pattern](https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716)
-
 
 
