@@ -28,24 +28,24 @@ public class VehicleController {
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(vehicleService.findAllVehicles());
+        return vehicleService.findAllVehicles();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(vehicleService.findVehicleById(id));
+        return vehicleService.findVehicleById(id);
     }
 
-    @PutMapping
-    public ResponseEntity<Map<String, String>> put(@RequestBody VehicleRecord vehicle) {
+    @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<Map<String, String>> patch(@RequestBody VehicleRecord vehicle) {
         vehicleService.updateVehicle(vehicle);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Veiculo atualizado com successo"));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Veiculo atualizado com successo"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> delete(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message:", "Veiculo deletado com successo"));
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Veiculo deletado com successo"));
 
     }
 }
